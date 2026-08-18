@@ -64,7 +64,66 @@ lfx-agent/
 │       ├── persistence.py  # Auditor de Cron, systemd y SSH
 │       └── integrity.py    # Generador de hashes SHA-256 de binarios
 ├── tests/                  # Suite de pruebas unitarias
-├── LICENSE                 # Licencia MIT
-├── README.md               # Documentación en Inglés
-├── README_ES.md            # Documentación en Español
-└── requirements.txt        # Dependencias opcionales (ej. rich, psutil)
+```  
+# Inicio Rápido
+
+Requisitos Previos:
+_Sistema Operativo Linux (Ubuntu, Debian, Arch Linux, RHEL, CachyOS, etc.)_
+
+_Python 3.8+_
+
+_Privilegios de Root/Sudo (necesarios para acceder a /proc/<PID>/environ y a todos los crontabs de usuarios)._
+
+# Instalación 
+
+```
+#Clonar el repositorio
+git clone [https://github.com/TU_USUARIO/lfx-agent.git](https://github.com/TU_USUARIO/lfx-agent.git)
+cd lfx-agent
+
+# (Opcional) Crear entorno virtual
+python3 -m venv venv
+source venv/bin/activate
+
+# Instalar paquetes opcionales de formato
+pip install -r requirements.txt
+``` 
+
+# Ejemplos de Uso
+
+``` 
+# Ejecutar un escaneo completo de triage del sistema
+sudo python3 -m lfx_agent.cli --all
+
+# Ejecutar análisis de memoria y persistencia, exportando la salida a JSON
+sudo python3 -m lfx_agent.cli --module memory persistence --json report.json
+
+# Mostrar el menú de ayuda y módulos disponibles
+python3 -m lfx_agent.cli --help
+``` 
+
+# Muestra de Salida JSON
+
+``` 
+{
+  "scan_metadata": {
+    "timestamp": "2026-08-17T09:40:00Z",
+    "hostname": "target-server",
+    "agent_version": "0.1.0"
+  },
+  "findings": [
+    {
+      "module": "memory_proc",
+      "pid": 4096,
+      "severity": "CRITICAL",
+      "issue": "Proceso ejecutándose desde un ejecutable eliminado",
+      "executable_path": "/tmp/netcat (deleted)",
+      "command_line": "/tmp/netcat -lvp 4444 -e /bin/bash",
+      "mitre_id": "T1070.004"
+    }
+  ]
+}
+```
+
+
+
