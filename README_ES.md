@@ -1,4 +1,4 @@
-cat << 'EOF' > README_ES.md
+
 [🇬🇧 Read in English](README.md)
 
 # LFX-Agent (Agente de Triage y Forensia en Linux)
